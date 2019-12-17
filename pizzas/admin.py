@@ -8,7 +8,11 @@ class PizzaAdmin(admin.ModelAdmin):
 class OrderAdmin(admin.ModelAdmin):
 	filter_horizontal = ['pizzas']
 
+class ShippingAdmin(admin.ModelAdmin):
+	list_display = ['first_name', 'last_name']
+	
+
 admin.site.register(Pizza, PizzaAdmin)
 admin.site.register(InstancePizza)
 admin.site.register(Order, OrderAdmin)
-
+admin.site.register(Shipping, ShippingAdmin)

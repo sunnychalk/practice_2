@@ -3,6 +3,7 @@ from django.urls import resolve, reverse
 
 from pizzas.views import *
 from pizzas.forms import *
+from pizzas.models import *
 
 # Create your tests here.
 class TestUrls(TestCase):
@@ -38,31 +39,31 @@ class TestUrls(TestCase):
 		url = reverse('add-pizza')
 		self.assertEqual(url, '/add_pizza/')
 
-class PizzaTests(TestCase):
-
+class PizzaModelTestCase(TestCase):
 	@classmethod
-	def setUpTestData(cls):
-		cls.pizza = Pizza.objects.create(name="Vegan", price=10)
+	def setUp(self):
+		Pizza.objects.create(name='New pizza', price=10.0, description="new pizza", photo="static/pizzas/no_photo.png")
 
-	def test_home_page(self):
-		response = self.client.get('/')
-		self.assertContains(response, "Bootstrap starter template")
-
-	def test_pizza_list_page(self):
-		response = self.client.get('/pizza_list/')
-		self.assertEqual(response.status_code, 404)
-		print(response.context)
-		self.assertContains(response, "Pizza")
-		self.assertTrue('pizza_amount' in response.context)
-		self.assertTrue(len(response.context['pizza_amount'])==1)
-		self.assertTrue('more_than_40' in response.context)
-		self.assertTrue(len(response.context['more_than_40'])==0)
-		self.assertTrue('values_list' in response.context)
-		self.assertTrue(len(response.context['values_list'])==1)
-
-	def test_pizza_form_label(self):
-		form = PizzaForm
-		self.assertTrue(form.fields['pizza_id'].label == None or form.fields['pizza_id', 'count'].label == 'pizza_id')
+	def test_pizza_name(self):
+		pizza = Pizza.objects.get(name='New pizza')
+		self.assertEqual(pizza.price, 10)
 
 
+class ShippingFormTest(TestCase):
+	def setUp(self):
+		Shipping.objects.create(email="user@user.com", first_name="user", last_name="user2",
+		street="street", city="Odessa", postcode="000000", region="Odessa region", country="Ukraine")
 
+	def test_shipping_form_valid(self):
+		form = ShippingForm(data={"email": "user@user.com", "first_name": "user", "last_name": "user2",
+		"street": "street", "city": "Odessa", "postcode": "000000", "region": "Odessa region", "country": "Ukraine"})
+		self.assertTrue(form.is_valid())
+
+	def test_shipping_form_invalid(self):
+		form = ShippingForm(data={"email": "ufgth.com", "first_name": "gh", "last_name": "h",
+		"street": "s", "city": "ghj", "postcode": "87", "region": "egion", "country": "Ue"})
+		self.assertFalse(form.is_valid())
+
+
+		
+		

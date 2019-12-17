@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block main %}
+
+<div>
+<center>
+	<div>
+		<h3>Мой заказ: {{ order.get_full_price }}</h3>
+		{% for pizza in order.pizzas.all %}
+		<div>
+			<p>{{ pizza.name }}, цена: {{ pizza.price }}, количество: {{ pizza.count }}</p>
+		</div>
+		{% endfor %}
+	</div>
+	<div>
+		<form action="/add_pizza/int:pk>/edit/">
+			<button type="button" class="btn btn-outline-dark">Редактировать заказ</button>
+		</form>	
+		<form action="/shipping_form/">
+			<button type="button" class="btn btn-outline-dark">Оформить заказ</button>
+		</form>
+	</div>
+</center>
+</div>
+
+{% endblock %}

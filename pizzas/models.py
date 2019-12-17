@@ -5,6 +5,8 @@ from accounts.models import User
 class Pizza(models.Model):
 	name = models.CharField(max_length=100)
 	price = models.DecimalField(max_digits=9, decimal_places=2, default=0)
+	description = models.CharField(max_length=555, default="Some description")
+	photo = models.ImageField(upload_to='static/pizzas/', default='static/pizzas/no_photo.png')
 	
 	class Meta:
 		verbose_name = "Пицца"
@@ -55,5 +57,21 @@ class Order(models.Model):
 		for pizza in pizzas:
 			full_price += pizza.price * pizza.count
 		return full_price
+
+
+class Shipping(models.Model):
+	email = models.EmailField(max_length=100)
+	first_name = models.CharField(max_length=100)
+	last_name = models.CharField(max_length=100)
+	street = models.CharField(max_length=100)
+	city = models.CharField(max_length=100)
+	postcode = models.CharField(max_length=100)
+	region = models.CharField(max_length=100)
+	country = models.CharField(max_length=100)
+
+	def __str__(self):
+		return self.last_name
+
+	
 
 

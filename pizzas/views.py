@@ -1,10 +1,10 @@
 from django.shortcuts import render
 from django import template
-from pizzas.models import Pizza, InstancePizza, Order
+from pizzas.models import Pizza, InstancePizza, Order, Shipping
 from django.views.generic.list import ListView
 from django.views.generic.edit import FormView, UpdateView
 from django.views.generic import TemplateView
-from pizzas.forms import IncreasePriceForm, PizzaForm
+from pizzas.forms import IncreasePriceForm, PizzaForm, ShippingForm
 from django.db.models import F
 
 
@@ -63,8 +63,19 @@ class AddPizzaView(FormView):
 		return super().form_valid(form)
 
 
+class EditOrderView(UpdateView):
+	template_name = 'core.html'
+	model = Order
+	fields = ['pizzas', 'full_price', 'date_created']
+	success_url = '/'
 
 
+class ShippingFormView(FormView):
+	template_name = 'shipping_form.html'
+	form_class = ShippingForm
+	fields = ['email', 'first_name', 'last_name', 'street', 'city', 'postcode', 'region', 'country']
+	success_url = '/'
 
-	
-
+	def form_valid(self, form):
+		form.save()
+		return super().form_valid(form)
