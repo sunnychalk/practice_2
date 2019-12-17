@@ -1,0 +1,40 @@
+<h1>Pizza Menu {{ supersecret_code }}</h1>
+
+<div>
+	{% for pizza in pizzas %}
+	<div>
+		<p>{{ pizza.name }}, цена: {{ pizza.price }}</p>
+	</div>
+	{% endfor %}
+</div>
+
+<h2>{{ orders }}</h2>
+
+<div>
+	<h3>Мой заказ: {{ order.get_full_price }}</h3>
+	{% for pizza in order.pizzas.all %}
+	<div>
+		<p>{{ pizza.name }}, цена: {{ pizza.price }}, количество: {{ pizza.count }}</p>
+	</div>
+	{% endfor %}
+</div>
+
+<div>
+	<h2>Сортировка</h2>
+	<a href="/pizzas/?ordering=price">По возрастанию цены</a><br>
+	<a href="/pizzas/?ordering=-price">По уменьшению цены</a><br>
+	<a href="/pizzas/?ordering=name">По названию</a><br>
+</div>
+
+<div>
+	{% for pizza in pizzas %}
+	<div>
+		<p>{{ pizza.name }}</p>
+		<form method="post" action="/add_pizza/">{% csrf_token %}
+			<input type="text" value="{{ pizza.id }}" hidden name="pizza_id">
+			<input type="number" name="count">
+			<input type="submit" value="Заказать">
+		</form>
+	</div>
+	{% endfor %}
+</div>

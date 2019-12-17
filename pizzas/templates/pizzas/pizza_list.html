@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block main %}
+<h1>Menu</h1>
+<h2>{{ pizza_amount }}</h2>
+<h2>{{ more_than_40 }}</h2>
+<h2>{{ values_list }}</h2>
+
+
+<ul>
+	{% for pizza in object_list %}
+	<li>{{ more_than_40 }}</li>
+	{% endfor %}
+</ul>
+
+<ul>
+	{% for pizza in object_list %}
+	<li>{{ values_list }}</li>
+	{% endfor %}
+</ul>
+
+
+{% endblock %}
+
