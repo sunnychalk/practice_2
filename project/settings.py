@@ -44,6 +44,14 @@ MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
+CACHES = {
+    'default': {
+    'BACKEND':
+    'django.core.cache.backends.memcached.MemcachedCache',
+    'LOCATION': '127.0.0.1:11211'
+    }
+}
+
 ROOT_URLCONF = 'project.urls'
 
 TEMPLATE_DIRS_APPS = [os.path.join(BASE_DIR, 'templates')]

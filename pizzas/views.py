@@ -6,6 +6,8 @@ from django.views.generic.edit import FormView, UpdateView
 from django.views.generic import TemplateView
 from pizzas.forms import IncreasePriceForm, PizzaForm, ShippingForm
 from django.db.models import F
+from django.http import HttpRequest, HttpResponse
+from django.template import  RequestContext
 
 
 # Create your views here.
@@ -26,13 +28,26 @@ class PizzaList(ListView):
 	model = Pizza
 	template_name = 'pizza_list.html'
 	
+	def get_client_ip(request):
+		cache = {}
+		x_forwarded_for = request.META.get("HTTP_X_FORWARDED_FOR")
+		client = request.user
+		if x_forwarded_for:
+			ip = x_forwarded_for.split(',')[0]
+		else:
+			ip = request.META.get('REMOTE_ADDR')
+		cache[client] = ip
+		return cache
+
 	def get_context_data(self, **kwargs):
 		context = super(PizzaList, self).get_context_data(**kwargs)
 		context['pizza_amount'] = Pizza.objects.all().count()
 		context['more_than_40'] = Pizza.objects.filter(price__gt=40).values('name')
 		context['values_list'] = Pizza.objects.all().values_list('name')
+		data = cache.get[client]
+		if data != ip:
+			print("WARNING: STRANGE IP ADRESS!!!")
 		return context
-
 
 class IncreasePrice(FormView):
 	model = Pizza
