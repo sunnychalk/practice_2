@@ -1,6 +1,7 @@
 from django.urls import path
 from django.conf.urls import url, include
-from pizzas.views import PizzaList, IncreasePrice, AddPizzaView, CoreTemplateView, EditOrderView, ShippingFormView 
+from pizzas.views import PizzaList, IncreasePrice, AddPizzaView
+from pizzas.views import CoreTemplateView, EditOrderView, ShippingFormView
 from django.views.generic.list import ListView
 from django.views.generic import TemplateView
 from django.views.decorators.cache import cache_page
