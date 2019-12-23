@@ -2,10 +2,12 @@ from django.utils.deprecation import MiddlewareMixin
 from django.shortcuts import redirect
 from django.contrib.auth import logout
 import datetime
+from datetime import timedelta, timezone
+from django.http import HttpResponseRedirect
 import project.settings
 
 
-class AutoLogOutMiddleware(MiddlewareMixin):
+"""class AutoLogOutMiddleware(MiddlewareMixin):
 	def process_request(self, request):
 		print('process_request')
 
@@ -21,7 +23,11 @@ class AutoLogOutMiddleware(MiddlewareMixin):
 
 	def process_response(self, request, response):
 		print('process_response')
-		return response
+		return response"""
 
+
+
+
+		
 
 

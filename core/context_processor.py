@@ -7,5 +7,5 @@ def contex_core(request):
     return {'site_url': settings.SITE_URL,
             'site_name': settings.SITE_NAME,
             'pizzas': Pizza.objects.all(),
-            'order': Order.objects.filter(user=request.user).first(),
+            #'order': Order.objects.filter(user=request.user).first(),
             'support_email_address': settings.SUPPORT_EMAIL_ADDRESS,}
