@@ -16,5 +16,6 @@ urlpatterns = [
     url(r'^switch_user/$', SwitchUser.as_view(), name="switch-user-url"),
     #API URLS
     url(r'^api/get_users/', UsersApiView.as_view(), name="get-users"),
+    url(r'^api/create_user/', CreateUserApiView.as_view(), name='create-user'),
 
 ]
