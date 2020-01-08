@@ -29,7 +29,8 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'core',
     'accounts',
-    'pizzas'
+    'django_cleanup.apps.CleanupConfig',
+    'pizzas',
 ]
 
 MIDDLEWARE = [
@@ -40,8 +41,17 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'core.middleware.AutoLogOutMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
+
+CACHES = {
+    'default': {
+    'BACKEND':
+    'django.core.cache.backends.memcached.MemcachedCache',
+    'LOCATION': '127.0.0.1:11211'
+    }
+}
 
 ROOT_URLCONF = 'project.urls'
 
@@ -95,6 +105,7 @@ USE_L10N = True
 USE_TZ = True
 
 AUTH_USER_MODEL = 'accounts.User'
+AUTO_LOGOUT_DELAY = 1
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
@@ -120,3 +131,25 @@ except ImportError:
     pass
 
 print("DEBUG SETTINGS: ", DEBUG)
+
+STATICFILES_DIRS = [
+    os.path.join(PROJECT_DIR, "static"),
+]
+
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+]
+
+try:
+    from .local_settings import *    
+except ImportError:
+    pass
+
+print("DEBUG SETTINGS: ", DEBUG)
+
+TIME = 60
+SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_COOKIE_AGE = TIME
+SESSION_IDLE_TIMEOUT = TIME

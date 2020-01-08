@@ -5,5 +5,7 @@ from django.conf.urls import url, include
 from django.views.generic import TemplateView
 
 urlpatterns = [
-    url(r'^core/$', TemplateView.as_view(template_name="core.html")),
+    url(r'^core', TemplateView.as_view(template_name="core.html")),
+    url(r'^my_order', TemplateView.as_view(template_name="my_order.html")),
+    url(r'^please_stop_spam/$', TemplateView.as_view(template_name="please_stop_spam.html")),
 ]
