@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'accounts',
     'django_cleanup.apps.CleanupConfig',
     'pizzas',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
