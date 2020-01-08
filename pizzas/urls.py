@@ -5,7 +5,16 @@ from pizzas.views import CoreTemplateView, EditOrderView, ShippingFormView
 from django.views.generic.list import ListView
 from django.views.generic import TemplateView
 from django.views.decorators.cache import cache_page
-from pizzas.views_api_v1 import PizzasApiView, OrdersApiView, CreateOrderApiView
+from pizzas.views_api_v1 import *
+from rest_framework import routers
+from pizzas.views_api_v2 import *
+
+
+router  = routers.DefaultRouter()
+router.register(r'pizzas_api', PizzaViewSet)
+router.register(r'orders_api', OrderViewSet)
+router.register(r'instance_pizza_api', InstancePizzaViewSet)
+
 
 
 urlpatterns = [
@@ -18,4 +27,6 @@ urlpatterns = [
     url(r'^api/get_pizzas/', PizzasApiView.as_view(), name="get-pizzas"),
     url(r'^api/get_orders/', OrdersApiView.as_view(), name="get-orders"),
     url(r'^api/create_order/', CreateOrderApiView.as_view(), name="create-order"),
+    url(r'^', include(router.urls)),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]
