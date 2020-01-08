@@ -1,5 +1,6 @@
 from django.db import models
 from accounts.models import User
+import json
 
 # Create your models here.
 
@@ -26,6 +27,13 @@ class Pizza(models.Model):
             pizza_template=self,
             count=count
         )
+
+    def get_serialize_data(self):
+        return{
+            "name": self.name,
+            "price": self.price,
+            "description": self.description,
+        }
 
 
 class InstancePizza(models.Model):
@@ -68,6 +76,13 @@ class Order(models.Model):
         for pizza in pizzas:
             full_price += pizza.price * pizza.count
         return full_price
+
+    def get_serialize_data(self):
+        return{
+            "pizzas": self.pizzas,
+            "full_price": self.full_price,
+            "date_created": self.date_created,
+        }
 
 
 class Shipping(models.Model):

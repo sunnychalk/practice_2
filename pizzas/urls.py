@@ -5,6 +5,7 @@ from pizzas.views import CoreTemplateView, EditOrderView, ShippingFormView
 from django.views.generic.list import ListView
 from django.views.generic import TemplateView
 from django.views.decorators.cache import cache_page
+from pizzas.views_api_v1 import PizzasApiView, OrdersApiView, CreateOrderApiView
 
 
 urlpatterns = [
@@ -14,4 +15,7 @@ urlpatterns = [
     url(r'^add_pizza/$', AddPizzaView.as_view(), name='add-pizza'),
     url(r'^add_pizza/int:pk>/edit/', EditOrderView.as_view()),
     url(r'^shipping_form/$', ShippingFormView.as_view(), name='shipping-form'),
+    url(r'^api/get_pizzas/', PizzasApiView.as_view(), name="get-pizzas"),
+    url(r'^api/get_orders/', OrdersApiView.as_view(), name="get-orders"),
+    url(r'^api/create_order/', CreateOrderApiView.as_view(), name="create-order"),
 ]

@@ -1,6 +1,7 @@
 # coding=utf-8
 
 from .views import *
+from .views_api_v1 import *
 from django.conf.urls import url, include
 from django.views.generic import TemplateView
 
@@ -13,4 +14,8 @@ urlpatterns = [
     url(r'^registration/$', RegistrationView.as_view(), name="registration-url"),
     url(r'^logout/$', LogoutView.as_view(), name="logout-view"),
     url(r'^switch_user/$', SwitchUser.as_view(), name="switch-user-url"),
+    #API URLS
+    url(r'^api/get_users/', UsersApiView.as_view(), name="get-users"),
+    url(r'^api/create_user/', CreateUserApiView.as_view(), name='create-user'),
+
 ]

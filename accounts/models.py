@@ -62,6 +62,13 @@ class User(AbstractUser, BaseModel):
     def clean_user_pk_by_secret_switch_key(hash):
         return signing.loads(hash)
 
+    def get_serialize_data(self):
+        return{
+            "first_name": self.first_name,
+            "last_name": self.last_name,
+            "email": self.email,
+        }
+
 
 class ResetPasswordData(models.Model):
     user = models.ForeignKey('User', null=True, blank=True, on_delete=models.CASCADE)
